@@ -1,11 +1,15 @@
 Mover m;
+Bob bob;
+Spring spring;
 int exercise;
 
 void setup(){
   size(640,360);
-  exercise = 1;
+  exercise = 2;
   m = new Mover(1, 100, 100, new PVector(3, 2.1));
-  frameRate(15);
+  bob = new Bob();
+  spring = new Spring(width/2, height/2, 1);
+  frameRate(10);
 }
 
 void draw(){
@@ -32,5 +36,14 @@ void exercise1(){
 }
 
 void exercise2(){
+  PVector gravity = new PVector(0, 9.81);
+  bob.applyForce(gravity);
+  
+  spring.connect(bob);
+  
+  bob.update();
+  bob.display();
+  spring.display();
+  spring.displayLine(bob);
   
 }
