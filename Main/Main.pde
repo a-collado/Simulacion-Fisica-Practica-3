@@ -4,7 +4,8 @@ int exercise;
 void setup(){
   size(640,360);
   exercise = 1;
-  
+  m = new Mover(1, 100, 100, new PVector(3, 2.1));
+  frameRate(15);
 }
 
 void draw(){
@@ -23,6 +24,10 @@ void draw(){
 }
 
 void exercise1(){
+  PVector gravity = new PVector(0, 9.81);
+  m.applyForce(gravity);
+  m.update();
+  m.display();
   
 }
 
