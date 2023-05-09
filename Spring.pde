@@ -1,6 +1,6 @@
 class Spring {
 
-  // We need to keep track of the spring’s anchor location.
+  // We need to keep track of the springs anchor location.
   PVector anchor;
 
   // Rest length and spring constant variables
@@ -13,7 +13,7 @@ class Spring {
     len = l;
   }
 
-  // Calculate spring force—our implementation of Hooke’s Law.
+  // Calculate spring force—our implementation of Hookes Law.
   void connect(Bob b) {
 
     //Get a vector pointing from anchor to Bob location.
