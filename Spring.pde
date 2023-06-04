@@ -17,16 +17,38 @@ class Spring {
   void connect(Bob b) {
 
     //Get a vector pointing from anchor to Bob location.
+    println(b.location);
+    println(anchor);
     PVector force = PVector.sub(b.location,anchor);
-    
     float d = force.mag();
+    println(d);
     // Calculate the displacement between
     // distance and rest length.
     float stretch = d - len;
+    println(stretch);
 
     //Direction and magnitude together!
     force.normalize();
     force.mult(-1 * k * stretch);
+    println(force);
+
+    // Call applyForce() right here!
+    b.applyForce(force);
+  }
+  
+    void connect2(Bob b, PVector force) {
+
+    //Get a vector pointing from anchor to Bob location.
+  
+    // Calculate the displacement between
+    // distance and rest length.
+    //float stretch = d - len;
+    float stretch = -force.y / k;
+
+    //Direction and magnitude together!
+    force.normalize();
+    force.mult(-1 * k * stretch);
+    println(force);
 
     // Call applyForce() right here!
     b.applyForce(force);
@@ -44,6 +66,5 @@ class Spring {
     stroke(0);
     line(b.location.x,b.location.y,anchor.x,anchor.y);
   }
-  //[end]
 
 }

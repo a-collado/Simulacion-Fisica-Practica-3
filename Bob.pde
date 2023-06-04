@@ -11,6 +11,13 @@ Bob() {
   mass = 1;
 }
 
+Bob(PVector l) {
+  location = l;
+  velocity = new PVector(0,0);
+  acceleration = new PVector(0,0);
+  mass = 1;
+}
+
 // Segunda ley de Newton: F = m * a
  void applyForce(PVector force) {
   PVector f = PVector.div(force,mass);
@@ -21,6 +28,7 @@ Bob() {
   velocity.add(acceleration);
   location.add(velocity);
   acceleration.mult(0);
+  println("Bob velocity:" + velocity);
  }
  
  void display() {

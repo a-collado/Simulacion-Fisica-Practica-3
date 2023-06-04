@@ -27,16 +27,40 @@ Mover(float m, float x , float y, PVector initialVel) {
   if ((location.x > width) || (location.x < 0)) {
     velocity.x = velocity.x * -1;
   }
-  if (location.y > height-8) {
+  if (location.y > height-16) {
     velocity.y = velocity.y * -1; 
-    location.y = height-8;
+    location.y = height-16;
+  }
+ }
+ 
+  void update2() {
+  velocity.add(acceleration);
+  location.add(velocity);
+  acceleration.mult(0);
+  //println( velocity.y );
+
+  //Bote
+  // Bounce off edges
+  if ((location.x > width) || (location.x < 0)) {
+    velocity.x = velocity.x * -1;
+  }
+  if (location.y > height-16) {
+    //println("BOTE");
+    velocity.y = velocity.y * -0.8f; 
+    location.y = height-16;
   }
  }
  
  void display() {
      stroke(0);
      fill(175);
-     ellipse(location.x ,location.y ,mass*16,mass*16);    
-  }
+     ellipse(location.x ,location.y ,mass*30,mass*30);    
+ }
+ 
+  void display2(float bobY, float anchorY) {
+     stroke(0);
+     fill(175);
+     ellipse(location.x , anchorY - (anchorY - bobY)/2 ,mass*32, (anchorY - bobY));    
+ }
   
 }
