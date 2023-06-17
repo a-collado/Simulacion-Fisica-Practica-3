@@ -51,16 +51,19 @@ Mover(float m, float x , float y, PVector initialVel) {
   }
  }
  
- void display() {
+ void display(PImage img) {
      stroke(0);
      fill(175);
-     ellipse(location.x ,location.y ,mass*30,mass*30);    
+     imageMode(CENTER);
+     image(img, location.x ,location.y ,mass*30,mass*30);    
  }
  
-  void display2(float bobY, float anchorY) {
+  void display2(float bobY, float anchorY, PImage img) {
      stroke(0);
      fill(175);
-     ellipse(location.x , anchorY - (anchorY - bobY)/2 ,mass*32, (anchorY - bobY));    
+     //ellipse(location.x , anchorY - (anchorY - bobY)/2 ,mass*32, (anchorY - bobY)); 
+     imageMode(CENTER);
+     image(img, location.x , anchorY - (anchorY - bobY)/2 ,mass*32, (anchorY - bobY));    
  }
   
 }

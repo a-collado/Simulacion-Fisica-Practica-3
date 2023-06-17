@@ -27,15 +27,20 @@ float w;
 float previousTime = 0;
 
 boolean firstBounce = false;
-boolean firstBounce_aux = false;
+
+PVector lastPos;
+
+PImage img;
 
 void setup(){
   size(640,360);
-  exercise = 3;
-  m = new Mover(mass, 100, 100, new PVector(0,0));
+  exercise = 2;
+  m = new Mover(mass, 200, 100, new PVector(0,0));
   bob = new Bob(new PVector(m.location.x, m.location.y-16));
   spring = new Spring(m.location.x, m.location.y+16 , 32);
-  spring.k = 2;
+  spring.k = 1.5;
+  lastPos = spring.anchor;
+  img = loadImage("ball.png");
   
   Ep = 0f;
   v = 0f;
@@ -44,7 +49,7 @@ void setup(){
   A = 0f;
   w = 0.0f;
   
-  frameRate(1);
+  frameRate(10);
 }
 
 void draw(){
@@ -69,24 +74,21 @@ void exercise1(){
   PVector gravity = new PVector(0,0.1);
   m.applyForce(gravity);
   m.update();
-  m.display();
+  m.display(img);
   
 }
 
-void exercise3(){
-
+void exercise2(){
+  
   Ep = mass * g * h;
   
   v = sqrt(2*g*h);
   Ec = 0.5 * mass * pow (v,2);
-  //println(Ep + " " + Ec);
-
-  //println(h);
 
   w = sqrt(k/mass);
 
-  float t = millis() / 1000.0;  // convert milliseconds to seconds
-  float x = A * sin(w*t + 0);    // Deformaicon de la pelota
+  float t = millis() / 1000.0;   // Milisegundos a segundos
+  float x = A * sin(w*t + 0);    // Deformacion de la pelota
   
   velocity.add(new PVector(0,g));
   location.add(velocity);
@@ -103,53 +105,35 @@ void exercise3(){
     location.y = height-16;
   }
 
+  fill(175);
   //ellipse(location.x, location.y, 30 * mass, 30 * mass - (A-x));
-  //println(h + " " + velocity);
-  
-    //m.display();
-  spring.anchor.x = m.location.x;
-  spring.anchor.y = m.location.y + 16f;
-  PVector gravity = new PVector(0,g);
-  m.applyForce(gravity);
-  m.update2();
+  imageMode(CENTER);
+  image(img, location.x, location.y, 30 * mass, 30 * mass - (A-x));
 
-  
-  //bob.applyForce(gravity);
-  
-  //spring.connect(bob, new PVector());
-  
-  if (!firstBounce_aux) {
-    
-    //velocity.y = velocity.y * -0.8f; 
-    //spring.connect(bob, new PVector(m.velocity.x, m.velocity.y * -0.2f));
-    bob.location = new PVector(spring.anchor.x ,spring.anchor.y - 32);
-    if(firstBounce){
-      firstBounce_aux = true;
-      spring.connect2(bob, m.velocity.mult(-0.2f);
-
-    }
-  } else if (spring.anchor.y > height-5) {
-    spring.anchor.y = height-5;
-    firstBounce = true;
-  }
-  bob.update();
-  bob.display();
-  spring.connect(bob);
-  spring.display();
-  spring.displayLine(bob);
-  m.display2(bob.location.y, spring.anchor.y);
-  //m.display();
 }
 
-void exercise2(){
+void exercise3(){
   
-  /*PVector gravity = new PVector(0, 9.81);
-  bob.applyForce(gravity);
+  if (spring.anchor.y >= height) {
+    firstBounce = true;
+  }
   
+  lastPos = spring.anchor.copy();
+  spring.anchor.x = m.location.x;
+  spring.anchor.y = m.location.y + 16f;
+  bob.location.y -= lastPos.y - spring.anchor.y;
+  
+  //if (spring.anchor.y >= height) {spring.anchor.y -= 10;}
+  //else {spring.anchor.y += 10;}
+  PVector gravity = new PVector(0,g);
+  if (firstBounce) {  bob.applyForce(gravity); }
+  m.applyForce(gravity);
   spring.connect(bob);
   
   bob.update();
   bob.display();
   spring.display();
-  spring.displayLine(bob);*/
+  spring.displayLine(bob);
+  m.update2();
+  m.display2(bob.location.y, spring.anchor.y, img);
 }

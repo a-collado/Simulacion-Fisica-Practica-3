@@ -28,7 +28,6 @@ Bob(PVector l) {
   velocity.add(acceleration);
   location.add(velocity);
   acceleration.mult(0);
-  println("Bob velocity:" + velocity);
  }
  
  void display() {
